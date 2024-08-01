@@ -1,7 +1,7 @@
 import keras
 import pandas as pd
 from keras.models import Sequential
-from keras.layers import Dense
+from keras.layers import Dense, Dropout
 from scikeras.wrappers import KerasClassifier
 from sklearn.model_selection import cross_val_score
 
@@ -12,7 +12,9 @@ def criarRede():
     classificador = Sequential()
     #Units qnt neuronios ocultos. Activation, qual forma de ativação. kernel_initializer como será iniciado os pesos iniciais.input_dim é a quantidade de entradas.
     classificador.add(Dense(units = 16, activation = 'relu', kernel_initializer = 'random_uniform', input_dim = 30))
+    classificador.add(Dropout(0.2)) #Ele irá zerar 20% dos neurônios de entrada
     classificador.add(Dense(units = 16, activation = 'relu', kernel_initializer = 'random_uniform'))
+    classificador.add(Dropout(0.2)) #Ele irá zerar 20% dos neurônios ocultos
     classificador.add(Dense(units=1, activation = 'sigmoid'))
 
     otimizador = keras.optimizers.Adam(learning_rate = 0.001, weight_decay = 0.0001, clipvalue = 0.5)
